@@ -1,0 +1,31 @@
+class Solution {
+    public static int lowerBound(int l , int r , List<Integer> list , int x) {
+        int left = l;
+        int right = r;
+        while(left <= right) {
+            int mid = (left + right)/2;
+            if(list.get(mid) == x)
+              return mid;
+            else if(list.get(mid) < x)
+              left = mid + 1;
+            else
+              right = mid - 1;
+        }
+        return left;
+    }
+    // Function to find length of longest increasing subsequence.
+    static int lis(int arr[]) {
+        // code here
+        List<Integer> list = new ArrayList<>();
+        list.add(arr[0]);
+        for(int i = 1; i < arr.length; i++) {
+            if(arr[i] > list.get(list.size() - 1))
+              list.add(arr[i]);
+            else {
+                int ind = lowerBound(0 , list.size() - 1, list , arr[i]);
+                list.set(ind , arr[i]);
+            }
+        }
+        return list.size();
+    }
+}
